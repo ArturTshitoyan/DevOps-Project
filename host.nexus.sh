@@ -15,8 +15,8 @@ nexus3 security realm activate DockerToken
 touch /etc/docker/daemon.json
 echo '{
   "insecure-registries": [
-     "http://18.209.5.62:8081",
-     "http://18.209.5.62:8082"
+     "http://54.167.12.24:8082",
+     "http://54.167.12.24:8082"
   ]
 }' > /etc/docker/daemon.json
 
