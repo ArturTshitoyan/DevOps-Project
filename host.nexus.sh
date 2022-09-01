@@ -10,12 +10,13 @@ pip install nexus3-cli
 export PATH="/home/ubuntu/.local/bin:$PATH"
 
 # add repository to nexus
+nexus3 login -U  http://http://54.167.12.24:8081 -u admin -p admin123 --no-x509_verify
 nexus3 repository create hosted docker --http-port 8082 hoso
 nexus3 security realm activate DockerToken
 touch /etc/docker/daemon.json
 echo '{
   "insecure-registries": [
-     "http://54.167.12.24:8082",
+     "http://54.167.12.24:8081",
      "http://54.167.12.24:8082"
   ]
 }' > /etc/docker/daemon.json
