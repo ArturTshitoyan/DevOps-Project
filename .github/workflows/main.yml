@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ "Artur_Tshitoyan" ]
+    branches: [ "dev" ]
  
 jobs:
   docker:
@@ -14,11 +14,11 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: arturtshitoyan1987
+          password: dckr_pat_aIS9bP9_RuZRGvS8YP5bu4O1HGg
           
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: arturtshitoyan1987/webserver:v1
+          tags: arturtshitoyan1987/djangoproject:v1
