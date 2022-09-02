@@ -23,13 +23,13 @@ sudo docker --version
 
 # add repository to nexus
 
-sudo touch /etc/docker/daemon.json
 echo '{
   "insecure-registries": [
-     "http://18.209.5.62:8081",
-     "http://18.209.5.62:8082"
+     "http://3.238.16.132:8081",
+     "http://3.238.16.132:8082"
   ]
-}' > /etc/docker/daemon.json
+}' > ~/daemon.json
+sudo mv ~/daemon.json /etc/docker/
 
 sudo systemctl daemon-reload
 sudo systemctl restart docker
