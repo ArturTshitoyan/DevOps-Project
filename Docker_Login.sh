@@ -9,6 +9,8 @@ echo '{
 }' > ~/daemon.json
 sudo mv ~/daemon.json /etc/docker/
 
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 
 touch ~/my_password.txt
 echo "admin123" > ~/my_password.txt
