@@ -42,7 +42,3 @@ nexus3 security realm activate DockerToken
 
 
 
-# docker login to nexus
-touch ~/my_password.txt
-echo "admin123" > ~/my_password.txt
-cat ~/my_password.txt | docker login --username admin --password-stdin
