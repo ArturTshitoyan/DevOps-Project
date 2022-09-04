@@ -15,7 +15,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           username: arturtshitoyan1987
-          password: dckr_pat_aIS9bP9_RuZRGvS8YP5bu4O1HGg
+          password: dockerhub420182
           
       - name: Build and push
         uses: docker/build-push-action@v3
