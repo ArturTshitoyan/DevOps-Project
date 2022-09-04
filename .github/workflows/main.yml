@@ -8,7 +8,7 @@ jobs:
   docker:
     runs-on: self-hosted
     steps:
-      - run: cat /etc/paswd 
+      - run: cat /etc/passwd 
 #       - name: Clone Repo
 #         uses: actions/checkout@v3
     
