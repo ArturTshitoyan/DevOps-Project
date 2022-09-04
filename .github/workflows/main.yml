@@ -8,17 +8,18 @@ jobs:
   docker:
     runs-on: self-hosted
     steps:
-      - name: Clone Repo
-        uses: actions/checkout@v3
+      - run: echo "The job was automatically triggered"
+#       - name: Clone Repo
+#         uses: actions/checkout@v3
     
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+#       - name: Login to DockerHub
+#         uses: docker/login-action@v2
+#         with:
+#           username: ${{ secrets.DOCKERHUB_USERNAME }}
+#           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           
-      - name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          tags: arturtshitoyan1987/djangoproject:v1
+#       - name: Build and push
+#         uses: docker/build-push-action@v3
+#         with:
+#           push: true
+#           tags: arturtshitoyan1987/djangoproject:v1
