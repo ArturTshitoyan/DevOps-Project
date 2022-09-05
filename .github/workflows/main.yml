@@ -22,4 +22,4 @@ jobs:
 #         uses: docker/build-push-action@v3
 #         with:
 #           push: true
-#           tags: arturtshitoyan1987/djangoproject:v1
+#           tags: arturtshitoyan1987/djangoproject:${{ github.sha }}
