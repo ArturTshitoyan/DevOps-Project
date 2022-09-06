@@ -3,26 +3,39 @@ name: CI
 on: 
   push:
     branches: [ "dev" ]
- 
-# jobs: 
-#   docker:
-#     runs-on: self-hosted
-#     steps:
+
+jobs:
+  docker:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build djangoproject image
+        run: docker build -t djangoproject .
+        
+      - name: Login to Nexus repo
+        run: echo "admin123" | docker login reg.andranik-sedrakyan.acadevopscourse.xyz -u admin --password-stdin
+        
+      - name: Publish Docker image
+        run: docker push reg.andranik-sedrakyan.acadevopscourse.xyz/djangoproject
+      
 #       - name: Nexus Repo Publish
 #         uses: sonatype-nexus-community/nexus-repo-github-action@master
 #         with:
-#          serverUrl: https://pinginx.dannyrollo.com/nexus3/
-#          username: ${{ secrets.nxrm_user }}
-#          password: ${{ secrets.nxrm_password }}
+#          serverUrl: https://reg.andranik-sedrakyan.acadevopscourse.xyz
+#          username: ${{ secrets.nexus_user }}
+#          password: ${{ secrets.nexus_password }}
 #          format: raw
 #          repository: raw-github-action-test
 #          coordinates: directory=nexus-repo-github-action-test-rawrepodir
 #          assets: filename=gh-action-test
 #          filename: ./gh-action-test
-         
-jobs:
-  bash-example:
-    runs-on: self-hosted
-    steps:
-      - name: Group of log lines
-        run: df -h
+
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+      - name: Build Docker image
+        run: docker build -t $REPO:latest -t $REPO:${GITHUB_SHA::8} .
+      - name: Publish Docker image
+        run: docker push $REPO
+        
