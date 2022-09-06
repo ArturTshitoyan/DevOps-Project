@@ -8,11 +8,11 @@ jobs:
   docker:
     runs-on: self-hosted
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+#       - name: Checkout
+#         uses: actions/checkout@v3
 
-      - name: Build djangoproject image
-        run: docker build -t djangoproject .
+#       - name: Build djangoproject image
+#         run: docker build -t djangoproject .
         
       - name: Login to Nexus repo 
         run: echo "admin" | docker login reg.andranik-sedrakyan.acadevopscourse.xyz -u admin --password-stdin
