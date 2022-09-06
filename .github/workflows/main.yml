@@ -32,10 +32,10 @@ jobs:
 #          assets: filename=gh-action-test
 #          filename: ./gh-action-test
 
-      - name: Login to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-      - name: Build Docker image
-        run: docker build -t $REPO:latest -t $REPO:${GITHUB_SHA::8} .
-      - name: Publish Docker image
-        run: docker push $REPO
+#       - name: Login to Docker Hub
+#         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+#       - name: Build Docker image
+#         run: docker build -t $REPO:latest -t $REPO:${GITHUB_SHA::8} .
+#       - name: Publish Docker image
+#         run: docker push $REPO
         
