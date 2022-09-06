@@ -14,7 +14,7 @@ jobs:
       - name: Build djangoproject image
         run: docker build -t djangoproject .
         
-      - name: Login to Nexus repo
+      - name: Login to Nexus repo 
         run: echo "admin123" | docker login reg.andranik-sedrakyan.acadevopscourse.xyz -u admin --password-stdin
         
       - name: Publish Docker image
