@@ -4,18 +4,25 @@ on:
   push:
     branches: [ "dev" ]
  
-jobs: 
-  docker:
+# jobs: 
+#   docker:
+#     runs-on: self-hosted
+#     steps:
+#       - name: Nexus Repo Publish
+#         uses: sonatype-nexus-community/nexus-repo-github-action@master
+#         with:
+#          serverUrl: https://pinginx.dannyrollo.com/nexus3/
+#          username: ${{ secrets.nxrm_user }}
+#          password: ${{ secrets.nxrm_password }}
+#          format: raw
+#          repository: raw-github-action-test
+#          coordinates: directory=nexus-repo-github-action-test-rawrepodir
+#          assets: filename=gh-action-test
+#          filename: ./gh-action-test
+         
+jobs:
+  bash-example:
     runs-on: self-hosted
     steps:
-      - name: Nexus Repo Publish
-        uses: sonatype-nexus-community/nexus-repo-github-action@master
-        with:
-         serverUrl: https://pinginx.dannyrollo.com/nexus3/
-         username: ${{ secrets.nxrm_user }}
-         password: ${{ secrets.nxrm_password }}
-         format: raw
-         repository: raw-github-action-test
-         coordinates: directory=nexus-repo-github-action-test-rawrepodir
-         assets: filename=gh-action-test
-         filename: ./gh-action-test
+      - name: Group of log lines
+        run: df -h
