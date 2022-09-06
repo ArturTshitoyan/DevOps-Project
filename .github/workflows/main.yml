@@ -15,7 +15,7 @@ jobs:
 #         run: docker build -t djangoproject .
         
       - name: Login to Nexus repo 
-        run: echo "admin" | docker login reg.andranik-sedrakyan.acadevopscourse.xyz -u admin --password-stdin
+        run: echo "admin" | docker login reg.andranik-sedrakyan.acadevopscourse.xyz -u admin --password-stdin -e REGISTRY_VALIDATION_DISABLED=true
         
       - name: Publish Docker image
         run: docker push reg.andranik-sedrakyan.acadevopscourse.xyz/djangoproject
