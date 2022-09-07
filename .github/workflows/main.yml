@@ -24,10 +24,10 @@ jobs:
 #         run: docker push reg.andranik-sedrakyan.acadevopscourse.xyz/djangoproject:latest
         
         
-  CD:
-    runs-on: self-hosted
+#   CD:
+#     runs-on: self-hosted
 #     needs: CI
-    steps:
+#     steps:
       - name: Git clone
         uses: actions/checkout@v3
         
