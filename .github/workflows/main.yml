@@ -1,24 +1,47 @@
-name: CI 
+name: CI-CD
 
 on: 
   push:
     branches: [ "dev" ]
 
-jobs:
-  docker:
-    runs-on: self-hosted
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+# jobs:
+#   CI:
+#     runs-on: self-hosted
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v3
 
-      - name: Build djangoproject image
-        run: docker build -t djangoproject:latest .
+#       - name: Build djangoproject image
+#         run: docker build -t djangoproject:latest .
         
-      - name: Login to Nexus repo 
-        run: echo "admin" | docker login reg.andranik-sedrakyan.acadevopscourse.xyz -u admin --password-stdin
+#       - name: Login to Nexus repo 
+#         run: echo ${{ secrets.NEXUS_PASSWORD }} | docker login reg.andranik-sedrakyan.acadevopscourse.xyz -u ${{ secrets.NEXUS_USERNAME }} --password-stdin
         
-      - name: Tag image
-        run: docker tag djangoproject:latest reg.andranik-sedrakyan.acadevopscourse.xyz/djangoproject:latest
+#       - name: Tag image
+#         run: docker tag djangoproject:latest reg.andranik-sedrakyan.acadevopscourse.xyz/djangoproject:latest
         
-      - name: Publish Docker image
-        run: docker push reg.andranik-sedrakyan.acadevopscourse.xyz/djangoproject:latest
+#       - name: Publish Docker image
+#         run: docker push reg.andranik-sedrakyan.acadevopscourse.xyz/djangoproject:latest
+        
+        
+  CD:
+    runs-on: self-hosted
+    needs: CI
+    steps:
+      - name: AWS Configure
+        uses: actions/checkout@v3
+        
+      - name: AWS Configure
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+          
+#       - name: run commands
+#         run: |
+#           aws eks update-kubeconfig --name dev
+#    #       kubectl create secret docker-registry regcred --docker-server=docker.io --docker-username=${{ secrets.DOCKER_USERNAME }} --docker-password=${{ secrets.DOCKER_PASSWORD }} || true
+#           envsubst < depl.yaml > ${{ github.sha }}.yaml
+#           kubectl apply -f ${{ github.sha }}.yaml
+          
