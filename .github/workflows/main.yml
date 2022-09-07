@@ -28,7 +28,7 @@ on:
     runs-on: self-hosted
 #     needs: CI
     steps:
-      - name: AWS Configure
+      - name: Git clone
         uses: actions/checkout@v3
         
       - name: AWS Configure
