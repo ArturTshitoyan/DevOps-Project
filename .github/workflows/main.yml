@@ -5,28 +5,28 @@ on:
     branches: [ "dev" ]
 
 jobs:
-#   CI:
-#     runs-on: self-hosted
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v3
+  CI:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-#       - name: Build djangoproject image
-#         run: docker build -t djangoproject:latest .
+      - name: Build djangoproject image
+        run: docker build -t djangoproject:latest .
         
-#       - name: Login to Nexus repo 
-#         run: echo ${{ secrets.NEXUS_PASSWORD }} | docker login reg.andranik-sedrakyan.acadevopscourse.xyz -u ${{ secrets.NEXUS_USERNAME }} --password-stdin
+      - name: Login to Nexus repo 
+        run: echo ${{ secrets.NEXUS_PASSWORD }} | docker login reg.andranik-sedrakyan.acadevopscourse.xyz -u ${{ secrets.NEXUS_USERNAME }} --password-stdin
         
-#       - name: Tag image
-#         run: docker tag djangoproject:latest reg.andranik-sedrakyan.acadevopscourse.xyz/djangoproject:latest
+      - name: Tag image
+        run: docker tag djangoproject:latest reg.andranik-sedrakyan.acadevopscourse.xyz/djangoproject:latest
         
-#       - name: Publish Docker image
-#         run: docker push reg.andranik-sedrakyan.acadevopscourse.xyz/djangoproject:latest
+      - name: Publish Docker image
+        run: docker push reg.andranik-sedrakyan.acadevopscourse.xyz/djangoproject:latest
         
         
   CD:
     runs-on: self-hosted
-#     needs: CI
+    needs: CI
     steps:
       - name: Git clone
         uses: actions/checkout@v3
