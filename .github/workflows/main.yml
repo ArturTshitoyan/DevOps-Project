@@ -38,10 +38,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
           
-#       - name: Deploy djangoproject to AWS EKS
-#         run: |
-#           aws eks update-kubeconfig --name dev
-#    #       kubectl create secret docker-registry regcred --docker-server=docker.io --docker-username=${{ secrets.DOCKER_USERNAME }} --docker-password=${{ secrets.DOCKER_PASSWORD }} || true
-#           envsubst < depl.yaml > ${{ github.sha }}.yaml
-#           kubectl apply -f ${{ github.sha }}.yaml
-          
+      - name: Deploy djangoproject to AWS EKS
+        run: |
+          aws eks update-kubeconfig --name dev
+          envsubst < depl.yaml > ${{ github.sha }}.yaml
+          kubectl apply -f ${{ github.sha }}.yaml
