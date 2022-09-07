@@ -8,34 +8,17 @@ jobs:
   docker:
     runs-on: self-hosted
     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-#       - name: Build djangoproject image
-#         run: docker build -t djangoproject .
+      - name: Build djangoproject image
+        run: docker build -t djangoproject:latest .
         
       - name: Login to Nexus repo 
         run: echo "admin" | docker login reg.andranik-sedrakyan.acadevopscourse.xyz -u admin --password-stdin
         
-      - name: Publish Docker image
-        run: docker push reg.andranik-sedrakyan.acadevopscourse.xyz:8082/nginx:stable
-      
-#       - name: Nexus Repo Publish
-#         uses: sonatype-nexus-community/nexus-repo-github-action@master
-#         with:
-#          serverUrl: https://reg.andranik-sedrakyan.acadevopscourse.xyz
-#          username: ${{ secrets.nexus_user }}
-#          password: ${{ secrets.nexus_password }}
-#          format: raw
-#          repository: raw-github-action-test
-#          coordinates: directory=nexus-repo-github-action-test-rawrepodir
-#          assets: filename=gh-action-test
-#          filename: ./gh-action-test
-
-#       - name: Login to Docker Hub
-#         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-#       - name: Build Docker image
-#         run: docker build -t $REPO:latest -t $REPO:${GITHUB_SHA::8} .
-#       - name: Publish Docker image
-#         run: docker push $REPO
+      - name: Tag image
+        run: docker tag djangoproject:latest reg.andranik-sedrakyan.acadevopscourse.xyz/djangoproject:latest
         
+      - name: Publish Docker image
+        run: docker push reg.andranik-sedrakyan.acadevopscourse.xyz/djangoproject:latest
