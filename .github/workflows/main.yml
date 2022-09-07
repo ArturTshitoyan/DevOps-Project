@@ -26,7 +26,7 @@ on:
         
   CD:
     runs-on: self-hosted
-    needs: CI
+#     needs: CI
     steps:
       - name: AWS Configure
         uses: actions/checkout@v3
