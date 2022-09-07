@@ -15,13 +15,13 @@ jobs:
         run: docker build -t djangoproject:latest .
         
       - name: Login to Nexus repo 
-        run: echo ${{ secrets.NEXUS_PASSWORD }} | docker login reg.andranik-sedrakyan.acadevopscourse.xyz -u ${{ secrets.NEXUS_USERNAME }} --password-stdin
+        run: echo ${{ secrets.NEXUS_PASSWORD }} | docker login ${{ secrets.NEXUS_REPO }} -u ${{ secrets.NEXUS_USERNAME }} --password-stdin
         
       - name: Tag image
-        run: docker tag djangoproject:latest reg.andranik-sedrakyan.acadevopscourse.xyz/djangoproject:latest
+        run: docker tag djangoproject:latest ${{ secrets.NEXUS_REPO }}/djangoproject:latest
         
       - name: Publish Docker image
-        run: docker push reg.andranik-sedrakyan.acadevopscourse.xyz/djangoproject:latest
+        run: docker push ${{ secrets.NEXUS_REPO }}/djangoproject:latest
         
         
   CD:
