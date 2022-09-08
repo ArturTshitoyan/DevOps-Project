@@ -46,7 +46,9 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
           
       - name: Make deployment file
-        run: envsubst < djangoproject.yaml > new_djangoproject.yaml
+        run: |
+          envsubst < djangoproject.yaml > new_djangoproject.yaml
+          cat new_djangoproject.yaml             
           
       - name: Deploy djangoproject to AWS EKS
         uses: Consensys/kubernetes-action@master
