@@ -39,6 +39,8 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
           
       - name: Deploy djangoproject to AWS EKS
-        run: |
-          aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
-          kubectl apply -f djangoproject.yaml
+        uses: Consensys/kubernetes-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.EKS_CLUSTER_NAME }}
+        with:
+          args: apply djangoproject.yaml
