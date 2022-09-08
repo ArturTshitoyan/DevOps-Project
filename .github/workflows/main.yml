@@ -4,6 +4,13 @@ on:
   push:
     branches: [ "dev" ]
 
+env:
+  AWS_DEFAULT_REGION: us-east-1
+  IMAGE_NAME: ${{ secrets.NEXUS_REPO }}/djangoproject
+  IMAGE_TAG: ${{ github.sha }}
+  SQL_HOST: ${{ secrets.SQL_HOST }}
+  SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
+
 jobs:
   CI:
     runs-on: self-hosted 
@@ -11,17 +18,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Build djangoproject image
-        run: docker build -t djangoproject:latest .
+        #  - name: Build djangoproject image
+        # run: docker build -t djangoproject:latest .
         
       - name: Login to Nexus repo 
         run: echo ${{ secrets.NEXUS_PASSWORD }} | docker login ${{ secrets.NEXUS_REPO }} -u ${{ secrets.NEXUS_USERNAME }} --password-stdin
         
-      - name: Tag image
-        run: docker tag djangoproject:latest ${{ secrets.NEXUS_REPO }}/djangoproject:latest
+      - name: Build djangoproject image
+        run: docker build -t ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} .
         
       - name: Publish Docker image
-        run: docker push ${{ secrets.NEXUS_REPO }}/djangoproject:latest
+        run: docker push ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
         
         
   CD:
