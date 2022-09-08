@@ -46,4 +46,4 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.EKS_CLUSTER_NAME }}
         with:
-          args: apply new_djangoproject.yaml
+          args: apply -f new_djangoproject.yaml
