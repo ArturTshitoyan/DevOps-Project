@@ -38,9 +38,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
           
+      - name: Make deployment file
+        run: envsubst < djangoproject.yaml > new_djangoproject.yaml
+          
       - name: Deploy djangoproject to AWS EKS
         uses: Consensys/kubernetes-action@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.EKS_CLUSTER_NAME }}
         with:
-          args: apply djangoproject.yaml
+          args: apply new_djangoproject.yaml
