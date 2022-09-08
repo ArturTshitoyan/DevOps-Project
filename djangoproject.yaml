@@ -48,7 +48,7 @@ spec:
               value: "5432"
           image: $IMAGE_NAME:$IMAGE_TAG
           name: djangoproject
-          ports:
+          ports: 
             - containerPort: 8000
           resources: {}
       restartPolicy: Always
