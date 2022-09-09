@@ -5,7 +5,7 @@ on:
     branches: [ "dev" ]
 
 env:
-  AWS_DEFAULT_REGION: ${{ AWS_DEFAULT_REGION }}
+  AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
   IMAGE_NAME: ${{ secrets.NEXUS_REPO }}/djangoproject
   IMAGE_TAG: ${{ github.sha }}
   SQL_HOST: ${{ secrets.SQL_HOST }}
