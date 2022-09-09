@@ -46,9 +46,12 @@ jobs:
         run: |
           envsubst < djangoproject.yaml > new_djangoproject.yaml
           cat new_djangoproject.yaml
+
+      - name: Deploy djangoproject to aws eks cluster
+        run: |
           aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}             
           kubectl apply -f new_djangoproject.yaml
-          
+
       # - name: Deploy djangoproject to AWS EKS
       #   uses: Consensys/kubernetes-action@master
       #   env:
