@@ -40,7 +40,7 @@ jobs:
       #   with:
       #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
       #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: ${{ secrets.AWS_DEFAULT_REGION }} 
+      #     aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
           
       - name: Make deployment file
         run: |
@@ -49,5 +49,7 @@ jobs:
 
       - name: Deploy djangoproject to aws eks cluster
         run: |
+          echo -e "[default]\naws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}\naws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" > ~/.aws/credentials
+          echo -e "[default]\nregion = ${{ secrets.AWS_DEFAULT_REGION }}" > ~/.aws/config
           aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}             
           kubectl apply -f new_djangoproject.yaml
