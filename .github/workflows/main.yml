@@ -45,11 +45,13 @@ jobs:
       - name: Make deployment file
         run: |
           envsubst < djangoproject.yaml > new_djangoproject.yaml
-          cat new_djangoproject.yaml             
+          cat new_djangoproject.yaml
+          aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}             
+          kubectl apply -f new_djangoproject.yaml
           
-      - name: Deploy djangoproject to AWS EKS
-        uses: Consensys/kubernetes-action@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.EKS_CLUSTER_NAME }}
-        with:
-          args: apply -f new_djangoproject.yaml
+      # - name: Deploy djangoproject to AWS EKS
+      #   uses: Consensys/kubernetes-action@master
+      #   env:
+      #     KUBE_CONFIG_DATA: ${{ secrets.EKS_CLUSTER_NAME }}
+      #   with:
+      #     args: apply -f new_djangoproject.yaml
