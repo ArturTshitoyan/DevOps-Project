@@ -17,10 +17,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-        #  - name: Build djangoproject image
-        # run: docker build -t djangoproject:latest .
-        
+     
       - name: Login to Nexus repo 
         run: echo ${{ secrets.NEXUS_PASSWORD }} | docker login ${{ secrets.NEXUS_REPO }} -u ${{ secrets.NEXUS_USERNAME }} --password-stdin
         
@@ -51,8 +48,8 @@ jobs:
           cat new_djangoproject.yaml             
           
       - name: Deploy djangoproject to AWS EKS
-        uses: tale/kubectl-action@v1
+        uses: Consensys/kubernetes-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.EKS_CLUSTER_NAME }}
         with:
-          base64-kube-config: ${{ secrets.EKS_CLUSTER_NAME }}
-        
-      - run: kubectl apply -f new_djangoproject.yaml
+          args: apply -f new_djangoproject.yaml
