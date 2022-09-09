@@ -5,7 +5,7 @@ on:
     branches: [ "dev" ]
 
 env:
-  AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+  AWS_DEFAULT_REGION: us-east-1
   IMAGE_NAME: ${{ secrets.NEXUS_REPO }}/djangoproject
   IMAGE_TAG: ${{ github.sha }}
   SQL_HOST: ${{ secrets.SQL_HOST }}
@@ -38,9 +38,9 @@ jobs:
       - name: AWS Configure
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: AKIARA7T7P4PATPQPN6O   #${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: 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 #${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1 #${{ secrets.AWS_DEFAULT_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
           
       - name: Make deployment file
         run: |
@@ -49,10 +49,5 @@ jobs:
 
       - name: Deploy djangoproject to aws eks cluster
         run: |
-          # aws configure
-          # aws configure
-          # aws configure
-          # # echo -e "[default]\naws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}\naws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" > ~/.aws/credentials
-          # # echo -e "[default]\nregion = ${{ secrets.AWS_DEFAULT_REGION }}" > ~/.aws/config
           aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}             
           kubectl apply -f new_djangoproject.yaml
