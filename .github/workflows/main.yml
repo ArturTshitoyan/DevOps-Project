@@ -31,21 +31,26 @@ jobs:
   CD:
     runs-on: self-hosted
     needs: CI
+    permissions:
+      id-token: write
+      contents: read
     steps:
+    
       - name: Git clone 
         uses: actions/checkout@v3
-        
-      - name: AWS Configure
-        uses: aws-actions/configure-aws-credentials@v1.6.1
-        with:
-          aws-access-key-id: ${{ secrets.AWSACCESSKEY }}
-          aws-secret-access-key: ${{ secrets.AWSSECRETKEY }}
-          aws-region: ${{ env.AWS_DEFAULT_REGION }}
-          
+
       - name: Make deployment file
         run: |
           envsubst < djangoproject.yaml > new_djangoproject.yaml
           cat new_djangoproject.yaml
+
+      - name: AWS Configure
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::070841761566:role/github
+          # aws-access-key-id: ${{ secrets.AWSACCESSKEY }}
+          # aws-secret-access-key: ${{ secrets.AWSSECRETKEY }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
       - name: Deploy djangoproject to aws eks cluster
         run: |
