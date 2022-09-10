@@ -10,6 +10,7 @@ env:
   IMAGE_TAG: ${{ github.sha }}
   SQL_HOST: ${{ secrets.SQL_HOST }}
   SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
+  KUBE_CONFIG_DATA: ${{ kube_config }}
 
 jobs:
   CI:
@@ -55,7 +56,17 @@ jobs:
       - name: Login to Nexus repo 
         run: echo ${{ secrets.NEXUS_PASSWORD }} | docker login ${{ secrets.NEXUS_REPO }} -u ${{ secrets.NEXUS_USERNAME }} --password-stdin
 
-      - name: Deploy djangoproject to aws eks cluster
-        run: |
-          aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}             
-          kubectl apply -f new_djangoproject.yaml
+      - name: Make kube config secret
+        run: kube_config=$(cat $HOME/.kube/config | base64)
+
+      - name: Trigger deploy
+        uses: Consensys/kubernetes-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
+        with:
+          args: apply -f new_djangoproject.yaml
+
+      # - name: Deploy djangoproject to aws eks cluster
+      #   run: |
+      #     aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}             
+      #     kubectl apply -f new_djangoproject.yaml
