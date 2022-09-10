@@ -33,7 +33,7 @@ jobs:
     needs: CI
     # permissions:
     #   id-token: write
-    #   contents: read
+    #   contents: read 
     steps:
     
       - name: Git clone 
