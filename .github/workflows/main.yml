@@ -10,7 +10,6 @@ env:
   IMAGE_TAG: ${{ github.sha }}
   SQL_HOST: ${{ secrets.SQL_HOST }}
   SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
-  KUBE_CONFIG_DATA: ${{ kube_config }}
 
 jobs:
   CI:
@@ -32,9 +31,9 @@ jobs:
   CD:
     runs-on: self-hosted
     needs: CI
-    permissions:
-      id-token: write
-      contents: read
+    # permissions:
+    #   id-token: write
+    #   contents: read
     steps:
     
       - name: Git clone 
@@ -48,25 +47,12 @@ jobs:
       - name: AWS Configure
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::070841761566:role/github
-          # aws-access-key-id: ${{ secrets.AWSACCESSKEY }}
-          # aws-secret-access-key: ${{ secrets.AWSSECRETKEY }}
+          # role-to-assume: arn:aws:iam::070841761566:role/github
+          aws-access-key-id: ${{ secrets.AWSACCESSKEY }}
+          aws-secret-access-key: ${{ secrets.AWSSECRETKEY }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
-      - name: Login to Nexus repo 
-        run: echo ${{ secrets.NEXUS_PASSWORD }} | docker login ${{ secrets.NEXUS_REPO }} -u ${{ secrets.NEXUS_USERNAME }} --password-stdin
-
-      - name: Make kube config secret
-        run: kube_config=$(cat $HOME/.kube/config | base64)
-
-      - name: Trigger deploy
-        uses: Consensys/kubernetes-action@master
-        env:
-          KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
-        with:
-          args: apply -f new_djangoproject.yaml
-
-      # - name: Deploy djangoproject to aws eks cluster
-      #   run: |
-      #     aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}             
-      #     kubectl apply -f new_djangoproject.yaml
+      - name: Deploy djangoproject to aws eks cluster
+        run: |
+          aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}             
+          kubectl apply -f new_djangoproject.yaml
