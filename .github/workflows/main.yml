@@ -15,6 +15,7 @@ jobs:
   CI:
     runs-on: self-hosted 
     steps:
+
       - name: Git clone
         uses: actions/checkout@v3
      
@@ -31,9 +32,6 @@ jobs:
   CD:
     runs-on: self-hosted
     needs: CI
-    # permissions:
-    #   id-token: write
-    #   contents: read 
     steps:
     
       - name: Git clone 
@@ -47,7 +45,6 @@ jobs:
       - name: AWS Configure
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          #  role-to-assume: arn:aws:iam::070841761566:role/github
           aws-access-key-id: ${{ secrets.AWSACCESSKEY }}
           aws-secret-access-key: ${{ secrets.AWSSECRETKEY }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
